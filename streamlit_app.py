@@ -98,12 +98,19 @@ def load_examples():
 st.set_page_config(page_title="Pairwise PubMed Search Generator", page_icon="🔎")
 st.title("Pairwise PubMed Search Generator", anchor=False)
 st.write("""
-This app generates PubMed search strings from two lists of terms and buttons to execute the search strings in PubMed in a new browser tab. 
+This app:
+* Generates PubMed search strings from two lists of input terms
+* Provides buttons to execute the generated search strings in PubMed in a new browser tab
 
 Use it to:
 * Combine a list of MeSH Main Headings with a list of MeSH Subheadings
 * Work around the truncation linitation in PubMed's proximity search
 * Combine two lists of terms with the AND operator
+         
+Note:
+* A set of example term lists for a search on frailty measures is provided as placeholder text
+* Use the **Load example terms** button to load the example terms into the form for search string generation
+* The example terms illustrate the order-of-magnitude difference in search results between a proximity search and an intersection search for this topic.
 """)
 
 with st.form("enter_terms_form", enter_to_submit=False):
@@ -178,7 +185,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
         )
     with bcol2:
         load_example = st.form_submit_button(
-            label = "Load frailty measures examples",
+            label = "Load example terms",
             on_click = load_examples,
             use_container_width = True,
         )
