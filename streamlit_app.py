@@ -23,13 +23,13 @@ with st.form("enter_terms_form"):
     st.header("Pairwise Keyword Proximity Search", divider=True)
     pcol1, pcol2 = st.columns(2)
     with pcol1:
-        topic1_terms = st.text_area("Enter Topic 1 terms, one per line, no truncation.", 
+        proximity_topic1_terms = st.text_area("Enter Topic 1 terms, one per line, no truncation.", 
                                     value="asthenia\nfatigue\nfrailty\nmuscle weakness\nmuscular weakness\nmuscle atrophy\nmuscular atrophy\ndebility\nsarcopenia", 
                                     height=text_area_height
                                     ).splitlines()
         proximity_field = st.selectbox("Proximity field", options=["ti", "tiab", "ad"], index=1)
     with pcol2:                                
-        topic2_terms = st.text_area("Enter Topic 2 terms, one per line, no truncation.", 
+        proximity_topic2_terms = st.text_area("Enter Topic 2 terms, one per line, no truncation.", 
                                     value="assess\nassessment\ndiagnosis\ndiagnoses\ndiagnostic\nevaluate\nevaluation\ninstrument\ninstruments\nindex\nmeasure\nmeasures\nscreen\nscreens\nscreening\nscreenings\ntest\ntests\ntesting\ntool\ntools",
                                     height=text_area_height, 
                                     ).splitlines() 
@@ -38,13 +38,13 @@ with st.form("enter_terms_form"):
     st.header("Pairwise Keyword Intersection Search (Boolean AND)", divider=True)
     icol1, icol2 = st.columns(2)
     with icol1:
-        topic1_terms = st.text_area("Enter Topic 1 terms, one per line", 
+        intersection_topic1_terms = st.text_area("Enter Topic 1 terms, one per line", 
                                     value="asthenia\nfatigue\nfrailty\nmusc* weak*\nmusc* atroph*\nmusc* atrophy\ndebilit*\nsarcopenia*", 
                                     height=text_area_height
                                     ).splitlines()
 
     with icol2:                     
-        topic2_terms = st.text_area("Enter Topic 2 terms, one per line", 
+        intersection_topic2_terms = st.text_area("Enter Topic 2 terms, one per line", 
                                     value="assess*\ndiagnos*\nevaluat*\ninstrument*\nindex\nindices\nmeasure*\nscreen*\ntest*\ntool*",
                                     height=text_area_height
                                     ).splitlines() 
@@ -67,9 +67,9 @@ with st.form("enter_terms_form"):
                     url=pubmed_search_url+mesh_search_string.replace(" ", "+"))
 
         keyword_proximity_searches = [
-            f'"{topic1_term} {topic2_term}"[{proximity_field}:~{proximity_distance}]'
-            for topic1_term in topic1_terms
-            for topic2_term in topic2_terms
+            f'"{proximity_topic1_term} {proximity_topic2_term}"[{proximity_field}:~{proximity_distance}]'
+            for topic1_term in proximity_topic1_terms
+            for topic2_term in proximity_topic2_terms
         ]
         keyword_proximity_search_string = " OR ".join(keyword_proximity_searches)
         st.write(keyword_proximity_search_string)
@@ -81,9 +81,9 @@ with st.form("enter_terms_form"):
                     url=pubmed_search_url+mesh_proximity_search_string.replace(" ", "+"))
 
         keyword_intersection_searches = [
-            "(" + topic1_term + " AND " + topic2_term + ")"
-            for topic1_term in topic1_terms
-            for topic2_term in topic2_terms
+            "(" + intersection_topic1_term + " AND " + intersection_topic2_term + ")"
+            for topic1_term in intersection_topic1_terms
+            for topic2_term in intersection_topic2_terms
         ]
 
         keyword_intersection_search_string = " OR ".join(keyword_intersection_searches)
