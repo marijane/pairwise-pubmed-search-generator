@@ -238,7 +238,6 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 url     = pubmed_search_url+mesh_search_string.replace(" ", "+"),
                 type    = "primary",
                 use_container_width = True,
-
             )
 
         keyword_proximity_searches = [
@@ -260,10 +259,11 @@ with st.form("enter_terms_form", enter_to_submit=False):
             
             if mesh_search_string:
                 mesh_proximity_search_string = " OR ".join([mesh_search_string, keyword_proximity_search_string])
+                with st.expander(f"Pairwise MeSH/Proximity Search String (length: {len(mesh_proximity_search_string)} characters)"):
+                    mesh_proximity_search_string
                 st.link_button(
                     label   = "Search PubMed with union of pairwise MeSH/proximity search strings",
                     url     = pubmed_search_url+mesh_proximity_search_string.replace(" ", "+"),
-                    type    = "primary",
                     use_container_width = True,
                 )
 
@@ -285,10 +285,12 @@ with st.form("enter_terms_form", enter_to_submit=False):
             )
 
             mesh_intersection_search_string = " OR ".join([mesh_search_string, keyword_intersection_search_string])
+            with st.expander(f"Pairwise MeSH/Intersection Search String (length: {len(mesh_intersection_search_string)} characters)"):
+                    mesh_intersection_search_string
+
             st.link_button(
                 label   = "Search PubMed with union of pairwise MeSH/intersection search strings",
                 url     = pubmed_search_url+mesh_intersection_search_string.replace(" ", "+"),
-                type = "primary",
                 use_container_width = True,
             )
 
