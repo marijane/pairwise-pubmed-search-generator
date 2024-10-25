@@ -32,6 +32,7 @@ with st.expander("Pairwise Mesh Main Heading/Subheading Search"):
 
         st.write(mesh_search_string)
 
-        st.page_link(pubmed_search_url+mesh_search_string.replace(" ", "+"), label="Search PubMed with pairwise MeSH heading/subheading search string")
+        st.link_button(label="Search PubMed with pairwise MeSH heading/subheading search string",
+                       url=pubmed_search_url+mesh_search_string.replace(" ", "+"))
 
 
