@@ -9,9 +9,12 @@ st.write("This app generates PubMed search strings from two lists of terms. Use 
 with st.form("enter_terms_form"):
     with st.expander("Pairwise Mesh Main Heading/Subheading Search"):
 
-        mesh_terms = st.text_area("Enter MeSH Main Headings, one per line.", height=300 ,value="asthenia\nfatigue\nfrailty\nmuscle weakness\nmuscle atrophy").splitlines()
+        mesh_terms = st.text_area("Enter MeSH Main Headings, one per line.", 
+                                  height=200 ,
+                                  value="asthenia\nfatigue\nfrailty\nmuscle weakness\nmuscle atrophy").splitlines()
         majr = st.checkbox("MeSH Major Topic")
-        subheadings = st.text_area("Enter MeSH Subheadings, one per line.", height=200, value="diagnosis\nepidemiology").splitlines()
+        subheadings = st.text_area("Enter MeSH Subheadings, one per line.", 
+                                   height=100, value="diagnosis\nepidemiology").splitlines()
         
         submitted_mesh = st.form_submit_button("Generate pairwise MeSH search string")
         
@@ -73,12 +76,12 @@ with st.form("enter_terms_form"):
     with st.expander("Pairwise Keyword Intersection Search (Boolean AND)"):
         topic1_terms = st.text_area("Enter Topic 1 terms, one per line", 
                                     value="asthenia\nfatigue\nfrailty\nmusc* weak*\nmusc* atroph*\nmusc* atrophy\ndebilit*\nsarcopenia*", 
-                                    height=300
+                                    height=200
                                     ).splitlines()
                                     
         topic2_terms = st.text_area("Enter Topic 2 terms, one per line", 
                                     value="assess*\ndiagnos*\nevaluat*\ninstrument*\nindex\nindices\nmeasure*\nscreen*\ntest*\ntool*",
-                                    height=500, 
+                                    height=300,
                                     ).splitlines() 
         
         submitted_intersection = st.form_submit_button("Generate pairwise intersection search string")
