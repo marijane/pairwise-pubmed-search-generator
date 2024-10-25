@@ -19,14 +19,22 @@ epidemiology
 proximity_topic1_example = \
 """
 asthenia
+debility
 fatigue
 frailty
+grasp
+grip
+hand strength
+handgrip
+muscle stiffness
+muscle strength
+muscle wasting
 muscle weakness
 muscular weakness
 muscle atrophy
 muscular atrophy
-debility
 sarcopenia
+walk
 """
 proximity_topic2_example = \
 """
@@ -40,12 +48,27 @@ evaluation
 instrument
 instruments
 index
+indices
 measure
 measures
+method
+methodology
+methods
+quantify
+quantification
+questionnaire
+questionnaires
+scale
+scales
+score
+scores
+scoring
 screen
 screens
 screening
 screenings
+survey
+surveys
 test
 tests
 testing
@@ -57,10 +80,17 @@ intersection_topic1_example = \
 asthenia
 debilit*
 fatigue
-frailty
+frail*
+grasp*
+grip*
+handgrip*()
 musc* atroph*
+musc* stiff*
+musc* strength
+musc* wast*
 musc* weak*
 sarcopenia*
+walk*
 """
 intersection_topic2_example = \
 """
@@ -68,10 +98,16 @@ assess*
 diagnos*
 evaluat*
 index
-indices
+indic*
 instrument*
 measure*
+method*
+quantif*
+questionnaire*
+scale*
+score*
 screen*
+survey*
 test*
 tool*
 """
