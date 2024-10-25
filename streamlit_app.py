@@ -97,7 +97,8 @@ def load_examples():
 
 st.set_page_config(page_title="Pairwise PubMed Search Generator", page_icon="🔎")
 st.title("Pairwise PubMed Search Generator", anchor=False)
-st.write("""
+with st.sidebar:
+    st.write("""
 This app:
 * Generates PubMed search strings from two lists of input terms
 * Provides buttons to execute the generated search strings in PubMed in a new browser tab
