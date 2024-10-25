@@ -86,6 +86,8 @@ def clear_form():
     st.session_state["pd"] = None
     st.session_state["pf"] = None
     st.session_state["sf"] = None
+    st.session_state["majr"] = False
+    st.session_state["noexp"] = False
 
 def load_examples():
     st.session_state['mesh'] = mesh_term_example.strip()
@@ -129,9 +131,9 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
         subcol1, subcol2 = st.columns(2)
         with subcol1:
-            majr = st.checkbox("MeSH Major Topic")
+            majr = st.checkbox("MeSH Major Topic", key="majr")
         with subcol2:
-            noexp = st.checkbox("Do not explode")
+            noexp = st.checkbox("Do not explode", key="noexp")
 
     with mcol2:
         subheadings = st.text_area(
@@ -270,7 +272,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
             mesh_intersection_search_string = " OR ".join([mesh_search_string, keyword_intersection_search_string])
             st.link_button(
-                label   = "Search PubMed with union pairwise MeSH/intersection search strings",
+                label   = "Search PubMed with union of pairwise MeSH/intersection search strings",
                 url     = pubmed_search_url+mesh_intersection_search_string.replace(" ", "+"),
                 type = "primary",
                 use_container_width = True,
