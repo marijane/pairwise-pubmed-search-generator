@@ -3,6 +3,7 @@ import streamlit as st
 pubmed_search_url = "https://pubmed.ncbi.nlm.nih.gov/?term="
 text_area_height = 250
 
+# example term lists
 mesh_term_example = \
 """
 asthenia
@@ -10,12 +11,12 @@ fatigue
 frailty
 muscle weakness
 muscle atrophy
-"""
+""".strip()
 subheading_example = \
 """
 diagnosis
 epidemiology
-"""
+""".strip()
 proximity_topic1_example = \
 """
 asthenia
@@ -27,7 +28,7 @@ muscular weakness
 muscle atrophy
 muscular atrophy
 sarcopenia
-"""
+""".strip()
 proximity_topic2_example = \
 """
 assess
@@ -59,7 +60,7 @@ tests
 testing
 tool
 tools
-"""
+""".strip()
 intersection_topic1_example = \
 """
 asthenia
@@ -70,7 +71,7 @@ musc* atroph*
 musc* wast*
 musc* weak*
 sarcopenia*
-"""
+""".strip()
 intersection_topic2_example = \
 """
 assess*
@@ -86,8 +87,9 @@ score*
 screen*
 test*
 tool*
-"""
+""".strip()
 
+# clear form button callback
 def clear_form():
     st.session_state["mesh"] = ""
     st.session_state["subheadings"] = ""
@@ -96,24 +98,35 @@ def clear_form():
     st.session_state["intersection topic 1"] = ""
     st.session_state["intersection topic 2"] = ""
     st.session_state["pd"] = 2
-    st.session_state["pf"] = None
-    st.session_state["sf"] = None
+    st.session_state["pf"] = "tiab"
+    st.session_state["sf"] = "tw"
     st.session_state["majr"] = False
     st.session_state["noexp"] = False
 
+# load examples button callback
 def load_examples():
-    st.session_state['mesh'] = mesh_term_example.strip()
-    st.session_state['subheadings'] = subheading_example.strip()
-    st.session_state["proximity topic 1"] = proximity_topic1_example.strip()
-    st.session_state["proximity topic 2"] = proximity_topic2_example.strip()
-    st.session_state["intersection topic 1"] = intersection_topic1_example.strip()
-    st.session_state["intersection topic 2"] = intersection_topic2_example.strip()
+    st.session_state['mesh'] = mesh_term_example
+    st.session_state['subheadings'] = subheading_example
+    st.session_state["proximity topic 1"] = proximity_topic1_example
+    st.session_state["proximity topic 2"] = proximity_topic2_example
+    st.session_state["intersection topic 1"] = intersection_topic1_example
+    st.session_state["intersection topic 2"] = intersection_topic2_example
     st.session_state["pd"] = 4
     st.session_state["pf"] = "tiab"
     st.session_state["sf"] = "tw"
     
-st.set_page_config(page_title="Pairwise PubMed Search Generator", page_icon="🔎")
+st.set_page_config(
+    page_title  = "Pairwise PubMed Search Generator", 
+    page_icon   = "🔎",
+    menu_items  = {
+        "Get help":"mailto:whimar@ohsu.edu", 
+        "Report a Bug":"https://github.com/marijane/pairwise-pubmed-search-generator/issues",
+        "About": "Made by Marijane White with Streamlit",
+    }
+)
 st.title("Pairwise PubMed Search Generator", anchor=False)
+
+# info/instructions sidebar
 with st.sidebar:
     st.write("""
 This app:
@@ -128,7 +141,7 @@ Use it to:
 Note:
 * A set of example term lists for a search on *frailty measures* is provided as placeholder text
 * Use the :red[Load example terms] button to load the frailty measures terms into the form for search string generation
-* Generated search URLs can be quite long, but it is possible to hit a length limit
+* Generated search URLs can be quite long, but it is possible to hit a length limit, which is not documented
 * A PubMed search can have no more than 256 wildcard characters
 """)
 
@@ -137,10 +150,10 @@ with st.form("enter_terms_form", enter_to_submit=False):
     mcol1, mcol2 = st.columns(2)
     with mcol1:
         mesh_terms = st.text_area(
-            label       = "Enter MeSH Main Headings, one per line.", 
-            placeholder = mesh_term_example.strip(),
             height      = text_area_height,
             key         = "mesh",
+            label       = "Enter MeSH Main Headings, one per line.", 
+            placeholder = mesh_term_example,
         ).splitlines()
 
         subcol1, subcol2 = st.columns(2)
@@ -151,63 +164,79 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
     with mcol2:
         subheadings = st.text_area(
-            label       = "Enter MeSH Subheadings, one per line.", 
-            placeholder = subheading_example.strip(),
             height      = text_area_height, 
-            key         = "subheadings"
+            key         = "subheadings",
+            label       = "Enter MeSH Subheadings, one per line.", 
+            placeholder = subheading_example,
         ).splitlines()
     
     st.header("Pairwise Keyword Proximity Search", divider=True, anchor=False)
     pcol1, pcol2 = st.columns(2)
     with pcol1:
         proximity_topic1_terms = st.text_area(
-            label       = "Enter Topic 1 terms, one per line, no truncation.", 
-            placeholder = proximity_topic1_example.strip(), 
             height      = text_area_height,
             key         = "proximity topic 1",
+            label       = "Enter Topic 1 terms, one per line, no truncation.", 
+            placeholder = proximity_topic1_example, 
         ).splitlines()
-        proximity_field = st.selectbox("Proximity field", options=["ti", "tiab", "ad"], index=1, key="pf")
+        proximity_field = st.selectbox(
+            index=1,
+            key="pf",
+            label="Proximity field", 
+            options=["ti", "tiab", "ad"], 
+        )
     with pcol2:                                
         proximity_topic2_terms = st.text_area(
-            label       = "Enter Topic 2 terms, one per line, no truncation.", 
-            placeholder = proximity_topic2_example.strip(),
             height      = text_area_height, 
             key         = "proximity topic 2",
+            label       = "Enter Topic 2 terms, one per line, no truncation.", 
+            placeholder = proximity_topic2_example,
         ).splitlines()
-        proximity_distance = st.number_input("Proximity distance", value=2, key="pd", step=1)
+        proximity_distance = st.number_input(
+            key         = "pd", 
+            label       = "Proximity distance", 
+            min_value   = 0, 
+            step        = 1,
+            value       = 2, 
+        )
 
     st.header("Pairwise Keyword Intersection Search (Boolean AND)", divider=True, anchor=False)
     icol1, icol2 = st.columns(2)
     with icol1:
         intersection_topic1_terms = st.text_area(
-            label       = "Enter Topic 1 terms, one per line.", 
-            placeholder = intersection_topic1_example.strip(),
             height      = text_area_height,
             key         = "intersection topic 1",
+            label       = "Enter Topic 1 terms, one per line.", 
+            placeholder = intersection_topic1_example,
         ).splitlines()
 
     with icol2:                     
         intersection_topic2_terms = st.text_area(
-            label       = "Enter Topic 2 terms, one per line.", 
-            placeholder = intersection_topic2_example.strip(),
             height      = text_area_height,
-            key         = "intersection topic 2"
-        ).splitlines() 
+            key         = "intersection topic 2",
+            label       = "Enter Topic 2 terms, one per line.", 
+            placeholder = intersection_topic2_example,
+        ).splitlines()
 
-    search_field = st.selectbox("Search field", options=["ti", "tiab", "tw", "all"], index=2, key="sf")
+    search_field = st.selectbox(
+        index   = 2,
+        label   = "Search field", 
+        key     = "sf",
+        options = ["ti", "tiab", "tw", "all"], 
+    )
     
     st.divider()
     bcol1, bcol2 = st.columns(2)
     with bcol1:
         clear = st.form_submit_button(
-            label   = "Clear form inputs",
-            on_click = clear_form,
+            label               = "Clear form inputs",
+            on_click            = clear_form,
             use_container_width = True,
         )
     with bcol2:
         load_example = st.form_submit_button(
-            label = "Load example terms",
-            on_click = load_examples,
+            label               = "Load example terms",
+            on_click            = load_examples,
             use_container_width = True,
         )
 
@@ -234,9 +263,9 @@ with st.form("enter_terms_form", enter_to_submit=False):
             with st.expander("Pairwise MeSH Main/Subheading Search String", expanded=True):
                 mesh_search_string
             st.link_button(
-                label   = "Search PubMed with pairwise MeSH heading/subheading search string",
-                url     = pubmed_search_url+mesh_search_string.replace(" ", "+"),
-                type    = "primary",
+                label               = "Search PubMed with pairwise MeSH heading/subheading search string",
+                type                = "primary",
+                url                 = pubmed_search_url+mesh_search_string.replace(" ", "+"),
                 use_container_width = True,
             )
 
@@ -251,9 +280,9 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 keyword_proximity_search_string
 
             st.link_button(
-                label   = "Search PubMed with pairwise keyword proximity search string",
-                url     = pubmed_search_url+keyword_proximity_search_string.replace(" ", "+"),
-                type    = "primary",
+                label               = "Search PubMed with pairwise keyword proximity search string",
+                type                = "primary",
+                url                 = pubmed_search_url+keyword_proximity_search_string.replace(" ", "+"),
                 use_container_width = True,
             )
             
@@ -262,8 +291,8 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 with st.expander(f"Pairwise MeSH/Proximity Search String (length: {len(mesh_proximity_search_string)} characters)"):
                     mesh_proximity_search_string
                 st.link_button(
-                    label   = "Search PubMed with union of pairwise MeSH/proximity search strings",
-                    url     = pubmed_search_url+mesh_proximity_search_string.replace(" ", "+"),
+                    label               = "Search PubMed with union of pairwise MeSH/proximity search strings",
+                    url                 = pubmed_search_url+mesh_proximity_search_string.replace(" ", "+"),
                     use_container_width = True,
                 )
 
@@ -278,9 +307,9 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 keyword_intersection_search_string
         
             st.link_button(
-                label   = "Search PubMed with pairwise keyword intersection search string",
-                url     = pubmed_search_url+keyword_intersection_search_string.replace(" ", "+"),
-                type    = "primary",
+                label               = "Search PubMed with pairwise keyword intersection search string",
+                type                = "primary",
+                url                 = pubmed_search_url+keyword_intersection_search_string.replace(" ", "+"),
                 use_container_width = True,
             )
 
@@ -289,8 +318,8 @@ with st.form("enter_terms_form", enter_to_submit=False):
                     mesh_intersection_search_string
 
             st.link_button(
-                label   = "Search PubMed with union of pairwise MeSH/intersection search strings",
-                url     = pubmed_search_url+mesh_intersection_search_string.replace(" ", "+"),
+                label               = "Search PubMed with union of pairwise MeSH/intersection search strings",
+                url                 = pubmed_search_url+mesh_intersection_search_string.replace(" ", "+"),
                 use_container_width = True,
             )
 
