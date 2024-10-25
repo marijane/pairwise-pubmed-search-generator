@@ -119,7 +119,7 @@ def clear_form():
     st.session_state["proximity topic 2"] = ""
     st.session_state["intersection topic 1"] = ""
     st.session_state["intersection topic 2"] = ""
-    st.session_state["pd"] = None
+    st.session_state["pd"] = 2
     st.session_state["pf"] = None
     st.session_state["sf"] = None
     st.session_state["majr"] = False
@@ -132,7 +132,7 @@ def load_examples():
     st.session_state["proximity topic 2"] = proximity_topic2_example.strip()
     st.session_state["intersection topic 1"] = intersection_topic1_example.strip()
     st.session_state["intersection topic 2"] = intersection_topic2_example.strip()
-    st.session_state["pd"] = 2
+    st.session_state["pd"] = 4
     st.session_state["pf"] = "tiab"
     st.session_state["sf"] = "tw"
     
@@ -188,7 +188,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
             height      = text_area_height,
             key         = "proximity topic 1",
         ).splitlines()
-        proximity_field = st.selectbox("Proximity field", options=["ti", "tiab", "ad"], placeholder="tiab", key="pf")
+        proximity_field = st.selectbox("Proximity field", options=["ti", "tiab", "ad"], index=1, key="pf")
     with pcol2:                                
         proximity_topic2_terms = st.text_area(
             label       = "Enter Topic 2 terms, one per line, no truncation.", 
@@ -196,7 +196,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
             height      = text_area_height, 
             key         = "proximity topic 2",
         ).splitlines()
-        proximity_distance = st.number_input("Proximity distance", placeholder=2, key="pd", step=1)
+        proximity_distance = st.number_input("Proximity distance", value=2, key="pd", step=1)
 
     st.header("Pairwise Keyword Intersection Search (Boolean AND)", divider=True, anchor=False)
     icol1, icol2 = st.columns(2)
@@ -216,7 +216,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
             key         = "intersection topic 2"
         ).splitlines() 
 
-    search_field = st.selectbox("Search field", options=["ti", "tiab", "tw", "all"], placeholder="tw", key="sf")
+    search_field = st.selectbox("Search field", options=["ti", "tiab", "tw", "all"], index=2, key="sf")
     
     st.divider()
     bcol1, bcol2 = st.columns(2)
