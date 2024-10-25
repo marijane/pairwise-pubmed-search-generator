@@ -152,7 +152,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
             height      = text_area_height,
             key         = "proximity topic 1",
         ).splitlines()
-        proximity_field = st.selectbox("Proximity field", options=["ti", "tiab", "ad"], index=1, key="pf")
+        proximity_field = st.selectbox("Proximity field", options=["ti", "tiab", "ad"], placeholder="tiab", key="pf")
     with pcol2:                                
         proximity_topic2_terms = st.text_area(
             label       = "Enter Topic 2 terms, one per line, no truncation.", 
@@ -180,7 +180,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
             key         = "intersection topic 2"
         ).splitlines() 
 
-    search_field = st.selectbox("Search field", options=["ti", "tiab", "tw", "all"], index=2, key="sf")
+    search_field = st.selectbox("Search field", options=["ti", "tiab", "tw", "all"], placeholder="tw", key="sf")
     
     st.divider()
     bcol1, bcol2 = st.columns(2)
