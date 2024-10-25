@@ -22,19 +22,11 @@ asthenia
 debility
 fatigue
 frailty
-grasp
-grip
-hand strength
-handgrip
-muscle stiffness
-muscle strength
-muscle wasting
 muscle weakness
 muscular weakness
 muscle atrophy
 muscular atrophy
 sarcopenia
-walk
 """
 proximity_topic2_example = \
 """
@@ -52,12 +44,7 @@ indices
 measure
 measures
 method
-methodology
 methods
-quantify
-quantification
-questionnaire
-questionnaires
 scale
 scales
 score
@@ -67,8 +54,6 @@ screen
 screens
 screening
 screenings
-survey
-surveys
 test
 tests
 testing
@@ -81,16 +66,10 @@ asthenia
 debilit*
 fatigue
 frail*
-grasp*
-grip*
-handgrip*()
 musc* atroph*
-musc* stiff*
-musc* strength
 musc* wast*
 musc* weak*
 sarcopenia*
-walk*
 """
 intersection_topic2_example = \
 """
@@ -102,12 +81,9 @@ indic*
 instrument*
 measure*
 method*
-quantif*
-questionnaire*
 scale*
 score*
 screen*
-survey*
 test*
 tool*
 """
@@ -152,6 +128,8 @@ Use it to:
 Note:
 * A set of example term lists for a search on *frailty measures* is provided as placeholder text
 * Use the :red[Load example terms] button to load the frailty measures terms into the form for search string generation
+* Generated search URLs can be quite long, but it is possible to hit a length limit
+* A PubMed search can have no more than 256 wildcard characters
 """)
 
 with st.form("enter_terms_form", enter_to_submit=False):
@@ -270,7 +248,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
         ]
         keyword_proximity_search_string = " OR ".join(keyword_proximity_searches)
         if keyword_proximity_search_string:
-            with st.expander("Pairwise Keyword Proximity Search String"):
+            with st.expander(f"Pairwise Keyword Proximity Search String (length: {len(keyword_proximity_search_string)} characters)"):
                 keyword_proximity_search_string
 
             st.link_button(
@@ -296,7 +274,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
         ]
         keyword_intersection_search_string = " OR ".join(keyword_intersection_searches)
         if keyword_intersection_search_string:
-            with st.expander("Pairwise Keyword Intersection Search String"):
+            with st.expander(f"Pairwise Keyword Intersection Search String (length: {len(keyword_intersection_search_string)} characters, wildcard count: {keyword_intersection_search_string.count('*')})"):
                 keyword_intersection_search_string
         
             st.link_button(
