@@ -44,8 +44,6 @@ index
 indices
 measure
 measures
-method
-methods
 scale
 scales
 score
@@ -81,7 +79,6 @@ index
 indic*
 instrument*
 measure*
-method*
 scale*
 score*
 screen*
