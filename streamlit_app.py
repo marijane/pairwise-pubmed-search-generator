@@ -55,12 +55,11 @@ tools
 intersection_topic1_example = \
 """
 asthenia
+debilit*
 fatigue
 frailty
-musc* weak*
 musc* atroph*
-musc* atrophy
-debilit*
+musc* weak*
 sarcopenia*
 """
 intersection_topic2_example = \
@@ -68,9 +67,9 @@ intersection_topic2_example = \
 assess*
 diagnos*
 evaluat*
-instrument*
 index
 indices
+instrument*
 measure*
 screen*
 test*
@@ -85,6 +84,8 @@ def clear_form():
     st.session_state["intersection topic 1"] = ""
     st.session_state["intersection topic 2"] = ""
     st.session_state["pd"] = None
+    st.session_state["pf"] = None
+    st.session_state["sf"] = None
 
 def load_examples():
     st.session_state['mesh'] = mesh_term_example.strip()
@@ -94,7 +95,9 @@ def load_examples():
     st.session_state["intersection topic 1"] = intersection_topic1_example.strip()
     st.session_state["intersection topic 2"] = intersection_topic2_example.strip()
     st.session_state["pd"] = 2
-
+    st.session_state["pf"] = "tiab"
+    st.session_state["sf"] = "tw"
+    
 st.set_page_config(page_title="Pairwise PubMed Search Generator", page_icon="🔎")
 st.title("Pairwise PubMed Search Generator", anchor=False)
 with st.sidebar:
@@ -109,9 +112,8 @@ Use it to:
 * Combine two lists of terms with the AND operator
          
 Note:
-* A set of example term lists for a search on frailty measures is provided as placeholder text
-* Use the **Load example terms** button to load the example terms into the form for search string generation
-* The example terms illustrate the order-of-magnitude difference in search results between a proximity search and an intersection search for this topic.
+* A set of example term lists for a search on *frailty measures* is provided as placeholder text
+* Use the :red[Load example terms] button to load the frailty measures terms into the form for search string generation
 """)
 
 with st.form("enter_terms_form", enter_to_submit=False):
@@ -148,7 +150,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
             height      = text_area_height,
             key         = "proximity topic 1",
         ).splitlines()
-        proximity_field = st.selectbox("Proximity field", options=["ti", "tiab", "ad"], index=1)
+        proximity_field = st.selectbox("Proximity field", options=["ti", "tiab", "ad"], index=1, key="pf")
     with pcol2:                                
         proximity_topic2_terms = st.text_area(
             label       = "Enter Topic 2 terms, one per line, no truncation.", 
@@ -175,8 +177,10 @@ with st.form("enter_terms_form", enter_to_submit=False):
             height      = text_area_height,
             key         = "intersection topic 2"
         ).splitlines() 
+
+    search_field = st.selectbox("Search field", options=["ti", "tiab", "tw", "all"], index=2, key="sf")
     
-    st.subheader("Form Controls", divider=True)
+    st.divider()
     bcol1, bcol2 = st.columns(2)
     with bcol1:
         clear = st.form_submit_button(
@@ -205,7 +209,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
         if noexp:
             field = field + ":noexp"
         mesh_searches = [
-            mesh_term + "/" + subheading + "[" + field + "]"
+            f"{mesh_term}/{subheading}[{field}]"
             for mesh_term in mesh_terms
             for subheading in subheadings
         ]
@@ -241,14 +245,14 @@ with st.form("enter_terms_form", enter_to_submit=False):
             if mesh_search_string:
                 mesh_proximity_search_string = " OR ".join([mesh_search_string, keyword_proximity_search_string])
                 st.link_button(
-                    label   = "Search PubMed with combined pairwise MeSH/proximity search strings",
+                    label   = "Search PubMed with union of pairwise MeSH/proximity search strings",
                     url     = pubmed_search_url+mesh_proximity_search_string.replace(" ", "+"),
                     type    = "primary",
                     use_container_width = True,
                 )
 
         keyword_intersection_searches = [
-            "(" + itopic1_term + " AND " + itopic2_term + ")"
+            f"({itopic1_term}[{search_field}] AND {itopic2_term}[{search_field}])"
             for itopic1_term in intersection_topic1_terms
             for itopic2_term in intersection_topic2_terms
         ]
@@ -266,7 +270,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
             mesh_intersection_search_string = " OR ".join([mesh_search_string, keyword_intersection_search_string])
             st.link_button(
-                label   = "Search PubMed with combined pairwise MeSH/intersection search strings",
+                label   = "Search PubMed with union pairwise MeSH/intersection search strings",
                 url     = pubmed_search_url+mesh_intersection_search_string.replace(" ", "+"),
                 type = "primary",
                 use_container_width = True,
