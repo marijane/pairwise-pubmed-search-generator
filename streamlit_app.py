@@ -269,7 +269,6 @@ with st.form("enter_terms_form", enter_to_submit=False):
             )
 
         st.subheader("Pairwise Keyword Proximity", divider=True, anchor=False)
-
         keyword_proximity_searches = [
             f'"{ptopic1_term} {ptopic2_term}"[{proximity_field}:~{proximity_distance}]'
             for ptopic1_term in proximity_topic1_terms
@@ -288,7 +287,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
             
             if mesh_search_string:
                 mesh_proximity_search_string = " OR ".join([mesh_search_string, keyword_proximity_search_string])
-                with st.expander(f"Search String (length: {len(mesh_proximity_search_string)} characters)"):
+                with st.expander(f"Union (Boolean OR) with MeSH search string (length: {len(mesh_proximity_search_string)} characters)"):
                     st.code(mesh_proximity_search_string, language="python", wrap_lines=True)
                 st.link_button(
                     label               = "Search PubMed with union of pairwise MeSH/proximity search strings",
@@ -316,7 +315,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
             )
 
             mesh_intersection_search_string = " OR ".join([mesh_search_string, keyword_intersection_search_string])
-            with st.expander(f"Search String (length: {len(mesh_intersection_search_string)} characters)"):
+            with st.expander(f"Union (Boolean OR) with MeSH search string (length: {len(mesh_intersection_search_string)} characters)"):
                 st.code(mesh_intersection_search_string, language="python", wrap_lines=True)
 
             st.link_button(
