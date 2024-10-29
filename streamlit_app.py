@@ -243,7 +243,9 @@ with st.form("enter_terms_form", enter_to_submit=False):
     )
 
     if submitted:
-        st.subheader("Generated Search Strings", divider=True)
+        st.header("Generated Search Strings", divider=True, anchor=False)
+        
+        st.subheader("Pairwise MeSH Main/Subheading", divider=True, anchor=False)
         if majr:
             field = "majr"
         else:
@@ -257,14 +259,16 @@ with st.form("enter_terms_form", enter_to_submit=False):
         ]
         mesh_search_string = " OR ".join(mesh_searches)
         if mesh_search_string: 
-            with st.expander("Pairwise MeSH Main/Subheading Search String", expanded=True):
-                mesh_search_string
+            with st.expander("Search String", expanded=True):
+                st.code(mesh_search_string, language="python", wrap_lines=True)
             st.link_button(
                 label               = "Search PubMed with pairwise MeSH heading/subheading search string",
                 type                = "primary",
                 url                 = pubmed_search_url+mesh_search_string.replace(" ", "+"),
                 use_container_width = True,
             )
+
+        st.subheader("Pairwise Keyword Proximity", divider=True, anchor=False)
 
         keyword_proximity_searches = [
             f'"{ptopic1_term} {ptopic2_term}"[{proximity_field}:~{proximity_distance}]'
@@ -273,9 +277,8 @@ with st.form("enter_terms_form", enter_to_submit=False):
         ]
         keyword_proximity_search_string = " OR ".join(keyword_proximity_searches)
         if keyword_proximity_search_string:
-            with st.expander(f"Pairwise Keyword Proximity Search String (length: {len(keyword_proximity_search_string)} characters)"):
-                keyword_proximity_search_string
-
+            with st.expander(f"Search String (length: {len(keyword_proximity_search_string)} characters)"):
+                st.code(keyword_proximity_search_string, language="python", wrap_lines=True)
             st.link_button(
                 label               = "Search PubMed with pairwise keyword proximity search string",
                 type                = "primary",
@@ -285,13 +288,15 @@ with st.form("enter_terms_form", enter_to_submit=False):
             
             if mesh_search_string:
                 mesh_proximity_search_string = " OR ".join([mesh_search_string, keyword_proximity_search_string])
-                with st.expander(f"Pairwise MeSH/Proximity Search String (length: {len(mesh_proximity_search_string)} characters)"):
-                    mesh_proximity_search_string
+                with st.expander(f"Search String (length: {len(mesh_proximity_search_string)} characters)"):
+                    st.code(mesh_proximity_search_string, language="python", wrap_lines=True)
                 st.link_button(
                     label               = "Search PubMed with union of pairwise MeSH/proximity search strings",
                     url                 = pubmed_search_url+mesh_proximity_search_string.replace(" ", "+"),
                     use_container_width = True,
                 )
+
+        st.subheader("Pairwise Keyword Intersection", divider=True, anchor=False)
 
         keyword_intersection_searches = [
             f"({itopic1_term}[{search_field}] AND {itopic2_term}[{search_field}])"
@@ -300,8 +305,8 @@ with st.form("enter_terms_form", enter_to_submit=False):
         ]
         keyword_intersection_search_string = " OR ".join(keyword_intersection_searches)
         if keyword_intersection_search_string:
-            with st.expander(f"Pairwise Keyword Intersection Search String (length: {len(keyword_intersection_search_string)} characters, wildcard count: {keyword_intersection_search_string.count('*')})"):
-                keyword_intersection_search_string
+            with st.expander(f"Search String (length: {len(keyword_intersection_search_string)} characters, wildcard count: {keyword_intersection_search_string.count('*')})"):
+                st.code(keyword_intersection_search_string, language="python", wrap_lines=True)
         
             st.link_button(
                 label               = "Search PubMed with pairwise keyword intersection search string",
@@ -311,8 +316,8 @@ with st.form("enter_terms_form", enter_to_submit=False):
             )
 
             mesh_intersection_search_string = " OR ".join([mesh_search_string, keyword_intersection_search_string])
-            with st.expander(f"Pairwise MeSH/Intersection Search String (length: {len(mesh_intersection_search_string)} characters)"):
-                    mesh_intersection_search_string
+            with st.expander(f"Search String (length: {len(mesh_intersection_search_string)} characters)"):
+                st.code(mesh_intersection_search_string, language="python", wrap_lines=True)
 
             st.link_button(
                 label               = "Search PubMed with union of pairwise MeSH/intersection search strings",
