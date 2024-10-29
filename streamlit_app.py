@@ -127,7 +127,7 @@ st.title("Pairwise PubMed Search Generator", anchor=False)
 with st.sidebar:
     st.write("""
 This app:
-* Generates PubMed search strings from two lists of input terms
+* Generates PubMed search strings from two lists of input terms, which can be easily copied to your clipboard
 * Provides buttons to execute the generated search strings in PubMed in a new browser tab
 
 Use it to:
