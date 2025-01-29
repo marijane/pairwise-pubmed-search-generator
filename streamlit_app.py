@@ -116,11 +116,11 @@ def load_examples():
 st.set_page_config(
     page_title  = "Pairwise PubMed Search Generator", 
     page_icon   = "🔎",
-    menu_items  = {
-        "Get help":"mailto:whimar@ohsu.edu", 
-        "Report a Bug":"https://github.com/marijane/pairwise-pubmed-search-generator/issues",
-        "About": "Made by Marijane White with Streamlit",
-    }
+    # menu_items  = {
+    #     "Get help":"mailto:whimar@ohsu.edu", 
+    #     "Report a Bug":"https://github.com/marijane/pairwise-pubmed-search-generator/issues",
+    #     "About": "Made by Marijane White with Streamlit",
+    # }
 )
 st.title("Pairwise PubMed Search Generator", anchor=False)
 
