@@ -205,15 +205,6 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 placeholder=mesh_term_example,
             ).splitlines()
 
-            subcol1, subcol2 = st.columns(2)
-            with subcol1:
-                majr = st.checkbox(
-                    "MeSH Major Topic",
-                    key="majr",
-                )
-            with subcol2:
-                noexp = st.checkbox("Do not explode", key="noexp")
-
         with mcol2:
             subheadings = st.text_area(
                 height=text_area_height,
@@ -222,6 +213,16 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 help="Make sure the subheadings are valid for all of the main headings entered.",
                 placeholder=subheading_example,
             ).splitlines()
+        moptcol1, moptcol2 = st.columns(2)
+        with moptcol1:
+            subcol1, subcol2 = st.columns(2)
+            with subcol1:
+                majr = st.checkbox(
+                    "MeSH Major Topic",
+                    key="majr",
+                )
+            with subcol2:
+                noexp = st.checkbox("Do not explode", key="noexp")
 
     if proximity_kw:
         st.header("Pairwise Proximity Search", divider=True, anchor=False)
@@ -233,13 +234,6 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 label="Enter Topic 1 terms, one per line, no truncation.",
                 placeholder=proximity_topic1_example,
             ).splitlines()
-            proximity_field = st.selectbox(
-                label="Proximity field",
-                help="Select the field to use for the proximity search: *ti* for the Title field, *tiab* for the Title/Abstract field, or *ad* for the Affiliation field.",
-                options=["ti", "tiab", "ad"],
-                key="pf",
-                index=1,
-            )
         with pcol2:
             proximity_topic2_terms = st.text_area(
                 height=text_area_height,
@@ -247,6 +241,16 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 label="Enter Topic 2 terms, one per line, no truncation.",
                 placeholder=proximity_topic2_example,
             ).splitlines()
+        poptcol1, poptcol2 = st.columns(2)
+        with poptcol1:
+            proximity_field = st.selectbox(
+                label="Proximity field",
+                help="Select the field to use for the proximity search: *ti* for the Title field, *tiab* for the Title/Abstract field, or *ad* for the Affiliation field.",
+                options=["ti", "tiab", "ad"],
+                key="pf",
+                index=1,
+            )
+        with poptcol2:
             proximity_distance = st.number_input(
                 key="pd",
                 label="Proximity distance",
