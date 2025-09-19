@@ -145,18 +145,26 @@ st.title("Pairwise PubMed Search Generator", anchor=False)
 
 # info/instructions sidebar
 with st.sidebar:
+    st.header("About", divider="rainbow", anchor=False)
     st.write(
         """
-This app:
-* Generates PubMed search strings from two lists of input terms, which can be easily copied to your clipboard
-* Provides buttons to run the generated searches in PubMed in a new browser tab
+The :red[Pairwise PubMed Search Generator] helps you generate PubMed search strings from two lists of input terms, which can be either copied to your clipboard, or launched in PubMed at the click of a button.
 
-Use it to:
+It can save you literally thousands of characters of typing and help you avoid errors in complex search strings.
+"""
+    )
+    st.header("Features", divider="rainbow", anchor=False)
+    st.write(
+        """
 * Combine a list of MeSH Main Headings with a list of MeSH Subheadings
 * Quickly generate a PubMed Proximity Search from two lists of search terms
 * Combine two lists of search terms with the AND operator (intersection search)
-
-Note:
+* Combine a pairwise MeSH search with either a pairwise Proximity or Intersection search
+"""
+    )
+    st.header("Tips", divider="rainbow", anchor=False)
+    st.write(
+        """
 * A set of example term lists for a search on *frailty measures* is provided as placeholder text
 * Use the :red[Load placeholder terms] button to load the frailty measures terms into the form for example search string generation
 * Use the :red[Clear terms] button to clear all text inputs without changing other form settings
@@ -236,6 +244,8 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 label="Enter Topic 1 terms, one per line, no truncation.",
                 placeholder=proximity_topic1_example,
             ).splitlines()
+            if any("*" in term for term in proximity_topic1_terms):
+                st.warning("Wildcards are not allowed in proximity searches.")
         with pcol2:
             proximity_topic2_terms = st.text_area(
                 height=text_area_height,
@@ -243,6 +253,8 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 label="Enter Topic 2 terms, one per line, no truncation.",
                 placeholder=proximity_topic2_example,
             ).splitlines()
+            if any("*" in term for term in proximity_topic2_terms):
+                st.warning("Wildcards are not allowed in proximity searches.")
         poptcol1, poptcol2 = st.columns(2)
         with poptcol1:
             proximity_field = st.selectbox(
@@ -371,7 +383,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
                         f"Search String (length:{mesh_search_string_len} characters)",
                         expanded=mesh_search_string_exp,
                     ):
-                        st.code(mesh_search_string, language="python", wrap_lines=True)
+                        st.code(mesh_search_string, wrap_lines=True)
 
                     col1, col2 = st.columns(2)
                     with col1:
@@ -412,7 +424,6 @@ with st.form("enter_terms_form", enter_to_submit=False):
                     ):
                         st.code(
                             keyword_proximity_search_string,
-                            language="python",
                             wrap_lines=True,
                         )
 
@@ -454,7 +465,6 @@ with st.form("enter_terms_form", enter_to_submit=False):
                         ):
                             st.code(
                                 mesh_proximity_search_string,
-                                language="python",
                                 wrap_lines=True,
                             )
 
@@ -511,7 +521,6 @@ with st.form("enter_terms_form", enter_to_submit=False):
                     ):
                         st.code(
                             keyword_intersection_search_string,
-                            language="python",
                             wrap_lines=True,
                         )
 
@@ -554,7 +563,6 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
                             st.code(
                                 mesh_intersection_search_string,
-                                language="python",
                                 wrap_lines=True,
                             )
 
@@ -577,4 +585,9 @@ with st.form("enter_terms_form", enter_to_submit=False):
                             use_container_width=True,
                         )
         else:
-            st.error("Empty form inputs, no search strings generated.")
+            st.error(
+                "Empty form inputs, no search strings generated.\n\n**Tip**: Use the *Load placeholder terms* button to load example terms into the form before generating search strings."
+            )
+
+with st.container(horizontal_alignment="center"):
+    st.badge("Two lists enter, one search leaves!", color="violet")
