@@ -338,6 +338,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 and intersection_topic2_terms
             )
         ):
+
             st.header("Generated Search Strings", divider=True, anchor=False)
 
             mesh_search_string = ""
@@ -345,6 +346,10 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 st.subheader(
                     "Pairwise MeSH Main/Subheading", divider=True, anchor=False
                 )
+                mesh_terms_chars = sum(len(term) for term in mesh_terms)
+                subheadings_chars = sum(len(subheading) for subheading in subheadings)
+                total_mesh_sh_chars = mesh_terms_chars + subheadings_chars
+
                 if majr:
                     field = "majr"
                 else:
@@ -367,6 +372,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
                         expanded=mesh_search_string_exp,
                     ):
                         st.code(mesh_search_string, language="python", wrap_lines=True)
+                    st.metric("Typing saved", value=f"{mesh_search_string_len - total_mesh_sh_chars} characters")
                     st.link_button(
                         label="Search PubMed with pairwise MeSH heading/subheading search string",
                         type="primary",
@@ -376,6 +382,9 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
             if proximity_kw and proximity_topic1_terms and proximity_topic2_terms:
                 st.subheader("Pairwise Proximity", divider=True, anchor=False)
+                proximity_topic1_terms_chars = sum(len(term) for term in proximity_topic1_terms)
+                proximity_topic2_terms_chars = sum(len(term) for term in proximity_topic2_terms)
+                total_proximity_chars = proximity_topic1_terms_chars + proximity_topic2_terms_chars
                 keyword_proximity_searches = [
                     f'"{ptopic1_term} {ptopic2_term}"[{proximity_field}:~{proximity_distance}]'
                     for ptopic1_term in proximity_topic1_terms
@@ -401,6 +410,10 @@ with st.form("enter_terms_form", enter_to_submit=False):
                             language="python",
                             wrap_lines=True,
                         )
+                    st.metric(
+                        "Typing saved",
+                        value=f"{keyword_proximity_search_string_len - total_proximity_chars} characters",
+                    )
                     st.link_button(
                         label="Search PubMed with pairwise keyword proximity search string",
                         type="primary",
@@ -410,6 +423,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
                     )
 
                     if mesh_search_string:
+                        st.subheader("MeSH + Proximity", divider=True, anchor=False)
                         mesh_proximity_search_string = " OR ".join(
                             [mesh_search_string, keyword_proximity_search_string]
                         )
@@ -430,6 +444,10 @@ with st.form("enter_terms_form", enter_to_submit=False):
                                 language="python",
                                 wrap_lines=True,
                             )
+                        st.metric(
+                            "Typing saved",
+                            value=f"{mesh_proximity_search_string_len - (total_mesh_sh_chars + total_proximity_chars)} characters",
+                        )
                         st.link_button(
                             label="Search PubMed with union of pairwise MeSH/proximity search strings",
                             url=pubmed_search_url
@@ -443,6 +461,9 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 and intersection_topic2_terms
             ):
                 st.subheader("Pairwise Intersection", divider=True, anchor=False)
+                intersection_topic1_terms_chars = sum(len(term) for term in intersection_topic1_terms)
+                intersection_topic2_terms_chars = sum(len(term) for term in intersection_topic2_terms)
+                total_intersection_chars = intersection_topic1_terms_chars + intersection_topic2_terms_chars
 
                 keyword_intersection_searches = [
                     f"({itopic1_term}[{search_field}] AND {itopic2_term}[{search_field}])"
@@ -468,6 +489,10 @@ with st.form("enter_terms_form", enter_to_submit=False):
                             language="python",
                             wrap_lines=True,
                         )
+                    st.metric(
+                        "Typing saved",
+                        value=f"{keyword_intersection_search_string_len - total_intersection_chars} characters",
+                    )
 
                     st.link_button(
                         label="Search PubMed with pairwise keyword intersection search string",
@@ -478,6 +503,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
                     )
 
                     if mesh_search_string:
+                        st.subheader("MeSH + Intersection", divider=True, anchor=False)
                         mesh_intersection_search_string = " OR ".join(
                             [mesh_search_string, keyword_intersection_search_string]
                         )
@@ -498,6 +524,10 @@ with st.form("enter_terms_form", enter_to_submit=False):
                                 language="python",
                                 wrap_lines=True,
                             )
+                        st.metric(
+                            "Typing saved",
+                            value=f"{mesh_intersection_search_string_len - (total_mesh_sh_chars + total_intersection_chars)} characters",
+                        )
 
                         st.link_button(
                             label="Search PubMed with union of pairwise MeSH/intersection search strings",
