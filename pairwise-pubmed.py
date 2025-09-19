@@ -163,7 +163,7 @@ Note:
 * Use the :red[Reset form] button to reset the form to its initial state
 * For MeSH Main Heading/subheading searches, make sure the subheadings are valid for all of the MeSH Main Headings entered
 * Generated search URLs can be quite long, but it is possible to hit a length limit, which is not documented
-* A PubMed search can have no more than 256 wildcard characters
+* PubMed limits search strings to 256 wildcard (*) characters; if an intersection search string exceeds this limit, a warning message will be shown
 """
     )
 
@@ -494,6 +494,10 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 keyword_intersection_search_string = " OR ".join(
                     keyword_intersection_searches
                 )
+                if keyword_intersection_search_string.count("*") > 256:
+                    st.warning(
+                        "The generated search string contains more than 256 wildcard (*) characters, which exceeds PubMed's limit. Please edit the input term lists and try again."
+                    )
                 keyword_intersection_search_string_len = len(
                     keyword_intersection_search_string
                 )
