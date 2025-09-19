@@ -372,7 +372,12 @@ with st.form("enter_terms_form", enter_to_submit=False):
                         expanded=mesh_search_string_exp,
                     ):
                         st.code(mesh_search_string, language="python", wrap_lines=True)
-                    st.metric("Typing saved", value=f"{mesh_search_string_len - total_mesh_sh_chars} characters")
+
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.metric("Characters typed", value=f"{total_mesh_sh_chars} characters")
+                    with col2:
+                        st.metric("Typing saved", value=f"{mesh_search_string_len - total_mesh_sh_chars} characters")
                     st.link_button(
                         label="Search PubMed with pairwise MeSH heading/subheading search string",
                         type="primary",
@@ -410,10 +415,18 @@ with st.form("enter_terms_form", enter_to_submit=False):
                             language="python",
                             wrap_lines=True,
                         )
-                    st.metric(
-                        "Typing saved",
-                        value=f"{keyword_proximity_search_string_len - total_proximity_chars} characters",
-                    )
+
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.metric(
+                            "Characters typed",
+                            value=f"{total_proximity_chars} characters",
+                        )
+                    with col2:
+                        st.metric(
+                            "Typing saved",
+                            value=f"{keyword_proximity_search_string_len - total_proximity_chars} characters",
+                        )
                     st.link_button(
                         label="Search PubMed with pairwise keyword proximity search string",
                         type="primary",
@@ -444,10 +457,18 @@ with st.form("enter_terms_form", enter_to_submit=False):
                                 language="python",
                                 wrap_lines=True,
                             )
-                        st.metric(
-                            "Typing saved",
-                            value=f"{mesh_proximity_search_string_len - (total_mesh_sh_chars + total_proximity_chars)} characters",
-                        )
+
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            st.metric(
+                                "Characters typed",
+                                value=f"{total_mesh_sh_chars + total_proximity_chars} characters",
+                            )
+                        with col2:
+                            st.metric(
+                                "Typing saved",
+                                value=f"{mesh_proximity_search_string_len - (total_mesh_sh_chars + total_proximity_chars)} characters",
+                            )
                         st.link_button(
                             label="Search PubMed with union of pairwise MeSH/proximity search strings",
                             url=pubmed_search_url
@@ -489,10 +510,18 @@ with st.form("enter_terms_form", enter_to_submit=False):
                             language="python",
                             wrap_lines=True,
                         )
-                    st.metric(
-                        "Typing saved",
-                        value=f"{keyword_intersection_search_string_len - total_intersection_chars} characters",
-                    )
+
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.metric(
+                            "Characters typed",
+                            value=f"{total_intersection_chars} characters",
+                        )
+                    with col2:
+                        st.metric(
+                            "Typing saved",
+                            value=f"{keyword_intersection_search_string_len - total_intersection_chars} characters",
+                        )
 
                     st.link_button(
                         label="Search PubMed with pairwise keyword intersection search string",
@@ -524,10 +553,18 @@ with st.form("enter_terms_form", enter_to_submit=False):
                                 language="python",
                                 wrap_lines=True,
                             )
-                        st.metric(
-                            "Typing saved",
-                            value=f"{mesh_intersection_search_string_len - (total_mesh_sh_chars + total_intersection_chars)} characters",
-                        )
+
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            st.metric(
+                                "Characters typed",
+                                value=f"{total_mesh_sh_chars + total_intersection_chars} characters",
+                            )
+                        with col2:
+                            st.metric(
+                                "Typing saved",
+                                value=f"{mesh_intersection_search_string_len - (total_mesh_sh_chars + total_intersection_chars)} characters",
+                            )
 
                         st.link_button(
                             label="Search PubMed with union of pairwise MeSH/intersection search strings",
