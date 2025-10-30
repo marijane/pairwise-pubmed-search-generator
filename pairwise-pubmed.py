@@ -308,6 +308,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
     st.divider()
     st.form_submit_button(
         label="Load placeholder terms",
+        key="load_placeholder_terms_button",
         icon=":material/convert_to_text:",
         help="Load the frailty measures placeholder search terms into the form to generate example search strings.",
         on_click=load_placeholders,
@@ -318,6 +319,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
     with bcol1:
         st.form_submit_button(
             label="Clear terms",
+            key="clear_terms_button",
             icon=":material/delete_sweep:",
             help="Clear all term text inputs without changing other form settings.",
             on_click=clear_terms,
@@ -326,6 +328,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
     with bcol2:
         st.form_submit_button(
             label="Reset form",
+            key="reset_form_button",
             help="Reset the form to its initial state.",
             icon=":material/reset_settings:",
             on_click=reset_form,
@@ -334,6 +337,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
     submitted = st.form_submit_button(
         label="Generate search strings",
+        key="generate_search_strings_button",
         icon=":material/play_circle:",
         help="Generate search strings and PubMed search buttons from pairwise lists.",
         use_container_width=True,
