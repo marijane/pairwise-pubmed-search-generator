@@ -141,19 +141,19 @@ st.set_page_config(
         "About": "Made by Marijane White with Streamlit",
     },
 )
-st.title("Pairwise PubMed Search Generator", anchor=False)
+st.html("<h1>Pairwise PubMed Search Generator</h1>")
 
 # info/instructions sidebar
-with st.sidebar:
-    st.header("About", divider="rainbow", anchor=False)
+with st.expander(":material/info: Info and Tips", expanded=False):
+    st.html("<h2>About</h2>")
     st.write(
         """
-The :red[Pairwise PubMed Search Generator] helps you generate PubMed search strings from two lists of input terms, which can be either copied to your clipboard, or launched in PubMed at the click of a button.
+The **Pairwise PubMed Search Generator** helps you generate PubMed search strings from two lists of input terms, which can be either copied to your clipboard, or launched in PubMed at the click of a button.
 
 It can save you literally thousands of characters of typing and help you avoid errors in complex search strings.
 """
     )
-    st.header("Features", divider="rainbow", anchor=False)
+    st.html("<h2>Features</h2>")
     st.write(
         """
 * Combine a list of MeSH Main Headings with a list of MeSH Subheadings
@@ -162,38 +162,40 @@ It can save you literally thousands of characters of typing and help you avoid e
 * Combine a pairwise MeSH search with either a pairwise Proximity or Intersection search
 """
     )
-    st.header("Tips", divider="rainbow", anchor=False)
+    st.html("<h2>Tips</h2>")
     st.write(
         """
 * A set of example term lists for a search on *frailty measures* is provided as placeholder text
-* Use the :red[Load placeholder terms] button to load the frailty measures terms into the form for example search string generation
-* Use the :red[Clear terms] button to clear all text inputs without changing other form settings
-* Use the :red[Reset form] button to reset the form to its initial state
+* Use the **Load placeholder terms** button to load the frailty measures terms into the form for example search string generation
+* Use the **Clear terms** button to clear all text inputs without changing other form settings
+* Use the **Reset form** button to reset the form to its initial state
 * For MeSH Main Heading/subheading searches, make sure the subheadings are valid for all of the MeSH Main Headings entered
 * Generated search URLs can be quite long, but it is possible to hit a length limit, which is not documented
 * PubMed limits search strings to 256 wildcard (*) characters; if an intersection search string exceeds this limit, a warning message will be shown
 """
     )
 
-st.write(
+st.html(
     """
-:red[What kind of search string do you want to generate?]
-
-:red[Select all that apply:]
-"""
+<h2>What kind of search string do you want to generate?</h2>
+<h3>Select all that apply:</h3>
+        """
 )
 mesh_sh = st.checkbox(
-    "Combine a list of [MeSH](https://pubmed.ncbi.nlm.nih.gov/help/#using-mesh-database) main headings with a list of MeSH subheadings",
+    label="Combine a list of [MeSH main headings](https://pubmed.ncbi.nlm.nih.gov/help/#using-mesh-database)  with a list of MeSH subheadings",
     key="mesh_sh",
+    # help="Check this box to generate a pairwise MeSH Main Heading/Subheading search string.",
 )
 proximity_kw = st.checkbox(
-    "Combine two lists of search terms in a [Proximity Search](https://pubmed.ncbi.nlm.nih.gov/help/#proximity-searching)",
+    label="Combine two lists of search terms in a [Proximity Search](https://pubmed.ncbi.nlm.nih.gov/help/#proximity-searching)",
     key="proximity_kw",
+    # help="Check this box to generate a pairwise proximity search string.",
     value=True,
 )
 intersection_kw = st.checkbox(
-    "Combine two lists of search terms with the [Boolean](https://pubmed.ncbi.nlm.nih.gov/help/#combining-with-boolean-operators) AND operator",
+    label="Combine two lists of search terms with the [Boolean](https://pubmed.ncbi.nlm.nih.gov/help/#combining-with-boolean-operators) AND operator",
     key="intersection_kw",
+    # help="Check this box to generate a pairwise intersection search string.",
 )
 
 with st.form("enter_terms_form", enter_to_submit=False):
@@ -202,16 +204,13 @@ with st.form("enter_terms_form", enter_to_submit=False):
         st.error("Please select at least one type of search string to generate.")
 
     if mesh_sh:
-        st.header(
-            "Pairwise MeSH Main/Subheading Search", divider="rainbow", anchor=False
-        )
+        st.html("<h2>Pairwise MeSH Main/Subheading Search</h2>")
         mcol1, mcol2 = st.columns(2)
         with mcol1:
             mesh_terms = st.text_area(
                 height=text_area_height,
                 key="mesh",
                 label="Enter MeSH Main Headings, one per line.",
-                help="Make sure all the headings can be used with the same subheadings.",
                 placeholder=mesh_term_example,
             ).splitlines()
 
@@ -220,7 +219,6 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 height=text_area_height,
                 key="subheadings",
                 label="Enter MeSH Subheadings, one per line.",
-                help="Make sure the subheadings are valid for all of the main headings entered.",
                 placeholder=subheading_example,
             ).splitlines()
         moptcol1, moptcol2 = st.columns(2)
@@ -235,7 +233,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 noexp = st.checkbox("Do not explode", key="noexp")
 
     if proximity_kw:
-        st.header("Pairwise Proximity Search", divider="rainbow", anchor=False)
+        st.html("<h2>Pairwise Proximity Search</h2>")
         pcol1, pcol2 = st.columns(2)
         with pcol1:
             proximity_topic1_terms = st.text_area(
@@ -259,7 +257,6 @@ with st.form("enter_terms_form", enter_to_submit=False):
         with poptcol1:
             proximity_field = st.selectbox(
                 label="Proximity field",
-                help="Select the field to use for the proximity search: *ti* for the Title field, *tiab* for the Title/Abstract field, or *ad* for the Affiliation field.",
                 options=["ti", "tiab", "ad"],
                 key="pf",
                 index=1,
@@ -268,18 +265,13 @@ with st.form("enter_terms_form", enter_to_submit=False):
             proximity_distance = st.number_input(
                 key="pd",
                 label="Proximity distance",
-                help="Enter the proximity distance (number of words between terms).",
                 min_value=0,
                 step=1,
                 value=2,
             )
 
     if intersection_kw:
-        st.header(
-            "Pairwise Intersection Search (Boolean AND)",
-            divider="rainbow",
-            anchor=False,
-        )
+        st.html("<h2>Pairwise Intersection Search (Boolean AND)</h2>")
         icol1, icol2 = st.columns(2)
         with icol1:
             intersection_topic1_terms = st.text_area(
@@ -299,7 +291,6 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
         search_field = st.selectbox(
             label="Search field",
-            help="Select the field to use for the intersection search: *ti* for the Title field, *tiab* for the Title/Abstract field, *tw* for the Text Word field, or *all* for All Fields. Note: because all generated searches use field tags, quotes around phrases are not needed.",
             key="sf",
             options=["ti", "tiab", "tw", "all"],
             index=1,
@@ -309,7 +300,6 @@ with st.form("enter_terms_form", enter_to_submit=False):
     st.form_submit_button(
         label="Load placeholder terms",
         icon=":material/convert_to_text:",
-        help="Load the frailty measures placeholder search terms into the form to generate example search strings.",
         on_click=load_placeholders,
         use_container_width=True,
     )
@@ -319,14 +309,12 @@ with st.form("enter_terms_form", enter_to_submit=False):
         st.form_submit_button(
             label="Clear terms",
             icon=":material/delete_sweep:",
-            help="Clear all term text inputs without changing other form settings.",
             on_click=clear_terms,
             use_container_width=True,
         )
     with bcol2:
         st.form_submit_button(
             label="Reset form",
-            help="Reset the form to its initial state.",
             icon=":material/reset_settings:",
             on_click=reset_form,
             use_container_width=True,
@@ -335,7 +323,6 @@ with st.form("enter_terms_form", enter_to_submit=False):
     submitted = st.form_submit_button(
         label="Generate search strings",
         icon=":material/play_circle:",
-        help="Generate search strings and PubMed search buttons from pairwise lists.",
         use_container_width=True,
         type="primary",
     )
@@ -351,13 +338,11 @@ with st.form("enter_terms_form", enter_to_submit=False):
             )
         ):
 
-            st.header("Generated Search Strings", divider=True, anchor=False)
+            st.html("<h2>Generated Search Strings</h2>")
 
             mesh_search_string = ""
             if mesh_sh and mesh_terms and subheadings:
-                st.subheader(
-                    "Pairwise MeSH Main/Subheading", divider=True, anchor=False
-                )
+                st.html("<h3>Pairwise MeSH Main/Subheading</h3>")
                 mesh_terms_chars = sum(len(term) for term in mesh_terms)
                 subheadings_chars = sum(len(subheading) for subheading in subheadings)
                 total_mesh_sh_chars = mesh_terms_chars + subheadings_chars
@@ -398,7 +383,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
                     )
 
             if proximity_kw and proximity_topic1_terms and proximity_topic2_terms:
-                st.subheader("Pairwise Proximity", divider=True, anchor=False)
+                st.html("<h3>Pairwise Proximity</h3>")
                 proximity_topic1_terms_chars = sum(len(term) for term in proximity_topic1_terms)
                 proximity_topic2_terms_chars = sum(len(term) for term in proximity_topic2_terms)
                 total_proximity_chars = proximity_topic1_terms_chars + proximity_topic2_terms_chars
@@ -447,7 +432,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
                     )
 
                     if mesh_search_string:
-                        st.subheader("MeSH + Proximity", divider=True, anchor=False)
+                        st.html("<h3>MeSH + Proximity</h3>")
                         mesh_proximity_search_string = " OR ".join(
                             [mesh_search_string, keyword_proximity_search_string]
                         )
@@ -491,7 +476,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 and intersection_topic1_terms
                 and intersection_topic2_terms
             ):
-                st.subheader("Pairwise Intersection", divider=True, anchor=False)
+                st.html("<h3>Pairwise Intersection</h3>")
                 intersection_topic1_terms_chars = sum(len(term) for term in intersection_topic1_terms)
                 intersection_topic2_terms_chars = sum(len(term) for term in intersection_topic2_terms)
                 total_intersection_chars = intersection_topic1_terms_chars + intersection_topic2_terms_chars
@@ -545,7 +530,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
                     )
 
                     if mesh_search_string:
-                        st.subheader("MeSH + Intersection", divider=True, anchor=False)
+                        st.html("<h3>MeSH + Intersection</h3>")
                         mesh_intersection_search_string = " OR ".join(
                             [mesh_search_string, keyword_intersection_search_string]
                         )
@@ -561,10 +546,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
                             expanded=keyword_intersection_search_string_exp,
                         ):
 
-                            st.code(
-                                mesh_intersection_search_string,
-                                wrap_lines=True,
-                            )
+                            st.code(mesh_intersection_search_string, wrap_lines=True)
 
                         col1, col2 = st.columns(2)
                         with col1:
@@ -588,6 +570,3 @@ with st.form("enter_terms_form", enter_to_submit=False):
             st.error(
                 "Empty form inputs, no search strings generated.\n\n**Tip**: Use the *Load placeholder terms* button to load example terms into the form before generating search strings."
             )
-
-with st.container(horizontal_alignment="center"):
-    st.badge("Two lists enter, one search leaves!", color="violet")
