@@ -169,6 +169,11 @@ It can save you literally thousands of characters of typing and help you avoid e
 * Use the **Load placeholder terms** button to load the frailty measures terms into the form for example search string generation
 * Use the **Clear terms** button to clear all text inputs without changing other form settings
 * Use the **Reset form** button to reset the form to its initial state
+"""
+)
+    st.html("<h2>Caveats</h2>")
+    st.write(
+        """
 * For MeSH Main Heading/subheading searches, make sure the subheadings are valid for all of the MeSH Main Headings entered
 * Generated search URLs can be quite long, but it is possible to hit a length limit, which is not documented
 * PubMed limits search strings to 256 wildcard (*) characters; if an intersection search string exceeds this limit, a warning message will be shown
