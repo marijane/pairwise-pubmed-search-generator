@@ -379,13 +379,13 @@ with st.form("enter_terms_form", enter_to_submit=False):
                     ):
                         st.code(mesh_search_string, wrap_lines=True)
 
-                    col1, col2, col3 = st.columns([1,2,2])
+                    col1, col2, col3 = st.columns(3)
                     with col1:
-                        st.metric("Total pairs", value=f"{total_mesh_sh_pairs} pairs")
+                        st.metric("Total pairs", value=f"{total_mesh_sh_pairs}")
                     with col2:
-                        st.metric("Characters typed", value=f"{total_mesh_sh_chars} chars")
+                        st.metric("Characters typed", value=f"{total_mesh_sh_chars}")
                     with col3:
-                        st.metric("Typing saved", value=f"{mesh_search_string_len - total_mesh_sh_chars} chars")
+                        st.metric("Characters generated", value=f"{mesh_search_string_len - total_mesh_sh_chars}")
                     st.link_button(
                         label="Search PubMed with pairwise MeSH heading/subheading search string",
                         type="primary",
@@ -427,18 +427,18 @@ with st.form("enter_terms_form", enter_to_submit=False):
                             wrap_lines=True,
                         )
 
-                    col1, col2, col3 = st.columns([1,2,2])
+                    col1, col2, col3 = st.columns(3)
                     with col1:
-                        st.metric("Total pairs", value=f"{total_proximity_pairs} pairs")
+                        st.metric("Total pairs", value=f"{total_proximity_pairs}")
                     with col2:
                         st.metric(
                             "Characters typed",
-                            value=f"{total_proximity_chars} chars",
+                            value=f"{total_proximity_chars}",
                         )
                     with col3:
                         st.metric(
-                            "Typing saved",
-                            value=f"{keyword_proximity_search_string_len - total_proximity_chars} chars",
+                            "Characters generated",
+                            value=f"{keyword_proximity_search_string_len - total_proximity_chars}",
                         )
                     st.link_button(
                         label="Search PubMed with pairwise keyword proximity search string",
@@ -470,21 +470,21 @@ with st.form("enter_terms_form", enter_to_submit=False):
                                 wrap_lines=True,
                             )
 
-                        col1, col2, col3 = st.columns([1,2,2])
+                        col1, col2, col3 = st.columns(3)
                         with col1:
                             st.metric(
                                 "Total pairs",
-                                value=f"{total_mesh_sh_pairs + total_proximity_pairs} pairs",
+                                value=f"{total_mesh_sh_pairs + total_proximity_pairs}",
                             )
                         with col2:
                             st.metric(
                                 "Characters typed",
-                                value=f"{total_mesh_sh_chars + total_proximity_chars} characters",
+                                value=f"{total_mesh_sh_chars + total_proximity_chars}",
                             )
                         with col3:
                             st.metric(
-                                "Typing saved",
-                                value=f"{mesh_proximity_search_string_len - (total_mesh_sh_chars + total_proximity_chars)} characters",
+                                "Characters generated",
+                                value=f"{mesh_proximity_search_string_len - (total_mesh_sh_chars + total_proximity_chars)}",
                             )
                         st.link_button(
                             label="Search PubMed with union of pairwise MeSH/proximity search strings",
@@ -535,18 +535,18 @@ with st.form("enter_terms_form", enter_to_submit=False):
                             wrap_lines=True,
                         )
 
-                    col1, col2 , col3= st.columns([1,2,2])
+                    col1, col2, col3 = st.columns(3)
                     with col1:
-                        st.metric("Total pairs", value=f"{total_intersection_pairs} pairs")
+                        st.metric("Total pairs", value=f"{total_intersection_pairs}")
                     with col2:
                         st.metric(
                             "Characters typed",
-                            value=f"{total_intersection_chars} characters",
+                            value=f"{total_intersection_chars}",
                         )
                     with col3:
                         st.metric(
-                            "Typing saved",
-                            value=f"{keyword_intersection_search_string_len - total_intersection_chars} characters",
+                            "Characters generated",
+                            value=f"{keyword_intersection_search_string_len - total_intersection_chars}",
                         )
 
                     st.link_button(
@@ -576,21 +576,21 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
                             st.code(mesh_intersection_search_string, wrap_lines=True)
 
-                        col1, col2, col3 = st.columns([1,2,2])
+                        col1, col2, col3 = st.columns(3)
                         with col1:
                             st.metric(
                                 "Total pairs",
-                                value=f"{total_mesh_sh_pairs + total_intersection_pairs} pairs",
+                                value=f"{total_mesh_sh_pairs + total_intersection_pairs}",
                             )
                         with col2:
                             st.metric(
                                 "Characters typed",
-                                value=f"{total_mesh_sh_chars + total_intersection_chars} characters",
+                                value=f"{total_mesh_sh_chars + total_intersection_chars}",
                             )
                         with col3:
                             st.metric(
-                                "Typing saved",
-                                value=f"{mesh_intersection_search_string_len - (total_mesh_sh_chars + total_intersection_chars)} characters",
+                                "Characters generated",
+                                value=f"{mesh_intersection_search_string_len - (total_mesh_sh_chars + total_intersection_chars)}",
                             )
 
                         st.link_button(
