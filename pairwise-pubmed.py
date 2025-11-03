@@ -348,6 +348,10 @@ with st.form("enter_terms_form", enter_to_submit=False):
             mesh_search_string = ""
             if mesh_sh and mesh_terms and subheadings:
                 st.html("<h3>Pairwise MeSH Main/Subheading</h3>")
+                mesh_terms_rows = len(mesh_terms)
+                subheadings_rows = len(subheadings)
+                total_mesh_sh_pairs = mesh_terms_rows * subheadings_rows
+
                 mesh_terms_chars = sum(len(term) for term in mesh_terms)
                 subheadings_chars = sum(len(subheading) for subheading in subheadings)
                 total_mesh_sh_chars = mesh_terms_chars + subheadings_chars
@@ -375,11 +379,13 @@ with st.form("enter_terms_form", enter_to_submit=False):
                     ):
                         st.code(mesh_search_string, wrap_lines=True)
 
-                    col1, col2 = st.columns(2)
+                    col1, col2, col3 = st.columns([1,2,2])
                     with col1:
-                        st.metric("Characters typed", value=f"{total_mesh_sh_chars} characters")
+                        st.metric("Total pairs", value=f"{total_mesh_sh_pairs} pairs")
                     with col2:
-                        st.metric("Typing saved", value=f"{mesh_search_string_len - total_mesh_sh_chars} characters")
+                        st.metric("Characters typed", value=f"{total_mesh_sh_chars} chars")
+                    with col3:
+                        st.metric("Typing saved", value=f"{mesh_search_string_len - total_mesh_sh_chars} chars")
                     st.link_button(
                         label="Search PubMed with pairwise MeSH heading/subheading search string",
                         type="primary",
@@ -389,6 +395,10 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
             if proximity_kw and proximity_topic1_terms and proximity_topic2_terms:
                 st.html("<h3>Pairwise Proximity</h3>")
+                proximity_topic1_rows = len(proximity_topic1_terms)
+                proximity_topic2_rows = len(proximity_topic2_terms)
+                total_proximity_pairs = proximity_topic1_rows * proximity_topic2_rows
+
                 proximity_topic1_terms_chars = sum(len(term) for term in proximity_topic1_terms)
                 proximity_topic2_terms_chars = sum(len(term) for term in proximity_topic2_terms)
                 total_proximity_chars = proximity_topic1_terms_chars + proximity_topic2_terms_chars
@@ -417,16 +427,18 @@ with st.form("enter_terms_form", enter_to_submit=False):
                             wrap_lines=True,
                         )
 
-                    col1, col2 = st.columns(2)
+                    col1, col2, col3 = st.columns([1,2,2])
                     with col1:
-                        st.metric(
-                            "Characters typed",
-                            value=f"{total_proximity_chars} characters",
-                        )
+                        st.metric("Total pairs", value=f"{total_proximity_pairs} pairs")
                     with col2:
                         st.metric(
+                            "Characters typed",
+                            value=f"{total_proximity_chars} chars",
+                        )
+                    with col3:
+                        st.metric(
                             "Typing saved",
-                            value=f"{keyword_proximity_search_string_len - total_proximity_chars} characters",
+                            value=f"{keyword_proximity_search_string_len - total_proximity_chars} chars",
                         )
                     st.link_button(
                         label="Search PubMed with pairwise keyword proximity search string",
@@ -458,13 +470,18 @@ with st.form("enter_terms_form", enter_to_submit=False):
                                 wrap_lines=True,
                             )
 
-                        col1, col2 = st.columns(2)
+                        col1, col2, col3 = st.columns([1,2,2])
                         with col1:
+                            st.metric(
+                                "Total pairs",
+                                value=f"{total_mesh_sh_pairs + total_proximity_pairs} pairs",
+                            )
+                        with col2:
                             st.metric(
                                 "Characters typed",
                                 value=f"{total_mesh_sh_chars + total_proximity_chars} characters",
                             )
-                        with col2:
+                        with col3:
                             st.metric(
                                 "Typing saved",
                                 value=f"{mesh_proximity_search_string_len - (total_mesh_sh_chars + total_proximity_chars)} characters",
@@ -482,6 +499,10 @@ with st.form("enter_terms_form", enter_to_submit=False):
                 and intersection_topic2_terms
             ):
                 st.html("<h3>Pairwise Intersection</h3>")
+                intersection_topic1_rows = len(intersection_topic1_terms)
+                intersection_topic2_rows = len(intersection_topic2_terms)
+                total_intersection_pairs = intersection_topic1_rows * intersection_topic2_rows
+
                 intersection_topic1_terms_chars = sum(len(term) for term in intersection_topic1_terms)
                 intersection_topic2_terms_chars = sum(len(term) for term in intersection_topic2_terms)
                 total_intersection_chars = intersection_topic1_terms_chars + intersection_topic2_terms_chars
@@ -514,13 +535,15 @@ with st.form("enter_terms_form", enter_to_submit=False):
                             wrap_lines=True,
                         )
 
-                    col1, col2 = st.columns(2)
+                    col1, col2 , col3= st.columns([1,2,2])
                     with col1:
+                        st.metric("Total pairs", value=f"{total_intersection_pairs} pairs")
+                    with col2:
                         st.metric(
                             "Characters typed",
                             value=f"{total_intersection_chars} characters",
                         )
-                    with col2:
+                    with col3:
                         st.metric(
                             "Typing saved",
                             value=f"{keyword_intersection_search_string_len - total_intersection_chars} characters",
@@ -553,13 +576,18 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
                             st.code(mesh_intersection_search_string, wrap_lines=True)
 
-                        col1, col2 = st.columns(2)
+                        col1, col2, col3 = st.columns([1,2,2])
                         with col1:
+                            st.metric(
+                                "Total pairs",
+                                value=f"{total_mesh_sh_pairs + total_intersection_pairs} pairs",
+                            )
+                        with col2:
                             st.metric(
                                 "Characters typed",
                                 value=f"{total_mesh_sh_chars + total_intersection_chars} characters",
                             )
-                        with col2:
+                        with col3:
                             st.metric(
                                 "Typing saved",
                                 value=f"{mesh_intersection_search_string_len - (total_mesh_sh_chars + total_intersection_chars)} characters",
