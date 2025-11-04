@@ -175,7 +175,8 @@ It can save you literally thousands of characters of typing and help you avoid e
     st.write(
         """
 * For MeSH Main Heading/subheading searches, make sure the subheadings are valid for all of the MeSH Main Headings entered
-* Generated search URLs can be quite long, but it is possible to hit a length limit, which is not documented
+* You may enter terms with multiple words, but do not add quotes, the tool will add them for you as needed
+* Generated search URLs can be quite long, but it is possible to hit a length limit, which is not documented, in which case you must copy the search to the clipboard instead of using the button
 * PubMed limits search strings to 256 wildcard (*) characters; if an intersection search string exceeds this limit, a warning message will be shown
 """
     )
