@@ -463,7 +463,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
                     )
 
                     if mesh_search_string:
-                        st.html("<h3>MeSH + Proximity</h3>")
+                        st.html("<h4>MeSH + Proximity</h4>")
                         mesh_proximity_search_string = " OR ".join(
                             [mesh_search_string, keyword_proximity_search_string]
                         )
@@ -578,7 +578,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
                     )
 
                     if mesh_search_string:
-                        st.html("<h3>MeSH + Intersection</h3>")
+                        st.html("<h4>MeSH + Intersection</h4>")
                         mesh_intersection_search_string = " OR ".join(
                             [mesh_search_string, keyword_intersection_search_string]
                         )
