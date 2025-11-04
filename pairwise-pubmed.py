@@ -381,11 +381,18 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
                     col1, col2, col3 = st.columns(3)
                     with col1:
-                        st.metric("Total pairs", value=f"{total_mesh_sh_pairs}", border=True)
+                        st.metric("MeSH main headings", value=f"{mesh_terms_rows}", border=True)
                     with col2:
-                        st.metric("Characters typed", value=f"{total_mesh_sh_chars}", border=True)
+                        st.metric("Subheadings", value=f"{subheadings_rows}", border=True)
                     with col3:
-                        st.metric("Characters generated", value=f"{mesh_search_string_len - total_mesh_sh_chars}", border=True)
+                        st.metric("Total pairs", value=f"{total_mesh_sh_pairs}", border=True)
+                    col4, col5 = st.columns(2)
+                    with col4:
+                        st.metric("Characters typed", value=f"{total_mesh_sh_chars}", border=True)
+                    with col5:
+                        st.metric(
+                            "Characters generated", value=f"{mesh_search_string_len - total_mesh_sh_chars}", border=True
+                        )
                     st.link_button(
                         label="Search PubMed with pairwise MeSH heading/subheading search string",
                         type="primary",
@@ -429,14 +436,19 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
                     col1, col2, col3 = st.columns(3)
                     with col1:
-                        st.metric("Total pairs", value=f"{total_proximity_pairs}", border=True)
+                        st.metric("Topic 1 terms", value=f"{proximity_topic1_rows}", border=True)
                     with col2:
+                        st.metric("Topic 2 terms", value=f"{proximity_topic2_rows}", border=True)
+                    with col3:
+                        st.metric("Total pairs", value=f"{total_proximity_pairs}", border=True)
+                    col4, col5 = st.columns(2)
+                    with col4:
                         st.metric(
                             "Characters typed",
                             value=f"{total_proximity_chars}",
                             border=True
                         )
-                    with col3:
+                    with col5:
                         st.metric(
                             "Characters generated",
                             value=f"{keyword_proximity_search_string_len - total_proximity_chars}",
@@ -474,11 +486,7 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
                         col1, col2, col3 = st.columns(3)
                         with col1:
-                            st.metric(
-                                "Total pairs",
-                                value=f"{total_mesh_sh_pairs + total_proximity_pairs}",
-                                border=True,
-                            )
+                            st.metric("Total pairs", value=f"{total_mesh_sh_pairs + total_proximity_pairs}", border=True)
                         with col2:
                             st.metric(
                                 "Characters typed",
@@ -542,14 +550,19 @@ with st.form("enter_terms_form", enter_to_submit=False):
 
                     col1, col2, col3 = st.columns(3)
                     with col1:
-                        st.metric("Total pairs", value=f"{total_intersection_pairs}", border=True)
+                        st.metric("Topic 1 terms", value=f"{intersection_topic1_rows}", border=True)
                     with col2:
+                        st.metric("Topic 2 terms", value=f"{intersection_topic2_rows}", border=True)
+                    with col3:
+                        st.metric("Total pairs", value=f"{total_intersection_pairs}", border=True)
+                    col4, col5 = st.columns(2)
+                    with col4:
                         st.metric(
                             "Characters typed",
                             value=f"{total_intersection_chars}",
                             border=True
                         )
-                    with col3:
+                    with col5:
                         st.metric(
                             "Characters generated",
                             value=f"{keyword_intersection_search_string_len - total_intersection_chars}",
