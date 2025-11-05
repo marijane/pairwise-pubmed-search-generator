@@ -1,2 +1,9 @@
 [global]
 disableWidgetStateDuplicationWarning = true
+
+[theme]
+primaryColor="#0a110d"
+backgroundColor="#eef5f1"
+secondaryBackgroundColor="#9bd9e6"
+textColor="#122218"
+codeBackgroundColor = "#ffffff"
