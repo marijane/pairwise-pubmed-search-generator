@@ -148,38 +148,37 @@ with st.expander(":material/info: Info and Tips", expanded=False):
     st.html("<h2>About</h2>")
     st.write(
         """
-The **Pairwise PubMed Search Generator** helps you generate PubMed search strings from two lists of input terms, which can be either copied to your clipboard, or launched in PubMed at the click of a button.
-
-It can save you literally thousands of characters of typing and help you avoid errors in complex search strings.
+The **Pairwise PubMed Search Generator** is a tool designed to streamline the creation of complex PubMed search strings. By using two lists of input terms, you can quickly generate search queries that can either be copied to your clipboard or launched directly in PubMed with a single click.
+This tool can save you thousands of keystrokes and help prevent errors in intricate search constructions.
 """
-    )
+)
     st.html("<h2>Features</h2>")
     st.write(
         """
-* Combine a list of MeSH Main Headings with a list of MeSH Subheadings
-* Quickly generate a PubMed Proximity Search from two lists of search terms
-* Combine two lists of search terms with the AND operator (intersection search)
-* Combine a pairwise MeSH search with either a pairwise Proximity or Intersection search
+* **MeSH Pairing:** Combine a list of MeSH Main Headings with a list of MeSH Subheadings
+* **Proximity Search:** Generate PubMed proximity searches from two lists of terms
+* **Intersection Search**: Combine two lists of terms using the AND operator
+* **Hybrid Search**: Merge a pairwise MeSH search with either a proximity or intersection search
 """
-    )
+)
     st.html("<h2>Tips</h2>")
     st.write(
         """
-* A set of example term lists for a search on *frailty measures* is provided as placeholder text
-* Use the **Load placeholder terms** button to load the frailty measures terms into the form for example search string generation
-* Use the **Clear terms** button to clear all text inputs without changing other form settings
-* Use the **Reset form** button to reset the form to its initial state
+* Example term lists for a search on frailty measures are provided as placeholder text
+* Use the **Load placeholder terms** button to populate the form with example terms
+* Use the **Clear terms** button to remove all input text without altering other settings
+* Use the **Reset form** button to return the form to its initial state
 """
 )
     st.html("<h2>Caveats</h2>")
     st.write(
         """
-* For MeSH Main Heading/subheading searches, make sure the subheadings are valid for all of the MeSH Main Headings entered
-* You may enter terms with multiple words, but do not add quotes, the tool will add them for you as needed
-* Generated search URLs can be quite long, but it is possible to hit a length limit, which is not documented, in which case you must copy the search to the clipboard instead of using the button
-* PubMed limits search strings to 256 wildcard (*) characters; if an intersection search string exceeds this limit, a warning message will be shown
+* When performing MeSH Main Heading/Subheading searches, ensure that all subheadings are valid for the selected MeSH Main Headings
+* Multi-word terms are supported — no need to add quotation marks; the tool will handle that automatically
+* Generated search URLs may be lengthy. If a URL exceeds the undocumented length limit, use the clipboard copy option instead of launching the search directly
+* PubMed limits search strings to 256 wildcard (*) characters; if an intersection search string exceeds this limit, a warning message will be displayed
 """
-    )
+)
 
 st.html(
     """
