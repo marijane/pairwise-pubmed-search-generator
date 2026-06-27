@@ -178,24 +178,24 @@ This tool can save you thousands of keystrokes and help prevent errors in intric
 * Generated search URLs may be lengthy. If a URL exceeds the undocumented length limit, use the clipboard copy option instead of launching the search directly
 * PubMed limits search strings to 256 wildcard (*) characters; if an intersection search string exceeds this limit, a warning message will be displayed
 """)
-    # st.html("<h2>PPSG News</h2>")
-    # st.write(
-    #     "The PPSG was officially announced to the world in a 15-minute how-to presentation at the [PNCMLA November 2025 Virtual Conference](https://pncmla.org/November-2025-Virtual-Conference). It gives some context for the tool and there is a demo at the end."
-    # )
-    # st_player("https://youtu.be/cWFvpcVXhbw?si=3vavQbvbLhttgIxl&t=2657")
+    st.html("<h2>PPSG News</h2>")
+    st.write(
+        "The PPSG was officially announced to the world in a 15-minute how-to presentation at the [PNCMLA November 2025 Virtual Conference](https://pncmla.org/November-2025-Virtual-Conference). It gives some context for the tool and there is a demo at the end."
+    )
+    st_player("https://youtu.be/cWFvpcVXhbw?si=3vavQbvbLhttgIxl&t=2657")
 
-    # st.write(
-    #     "In February 2026, the PPSG was added to [TERA Tools](https://tera-tools.com/), a suite of tools aimed at accelerating evidence synthesis studies. You can find it under the *Pairwise Pubmed* button in the sidebar once you're logged into TERA."
-    # )
+    st.write(
+        "In February 2026, the PPSG was added to [TERA Tools](https://tera-tools.com/), a suite of tools aimed at accelerating evidence synthesis studies. You can find it under the *Pairwise Pubmed* button in the sidebar once you're logged into TERA."
+    )
 
-    # st.write(
-    #     "In March 2026, I wrote [a blog post about the PPSG](https://uxcaucustips.blogspot.com/2026/03/tip65-search-string-theory-applying.html) for the [MLA UX Caucus Database Tips Blog](https://uxcaucustips.blogspot.com/). It covers much of the same information as in the PNCMLA presentation, but in a bit more depth."
-    # )
+    st.write(
+        "In March 2026, I wrote [a blog post about the PPSG](https://uxcaucustips.blogspot.com/2026/03/tip65-search-string-theory-applying.html) for the [MLA UX Caucus Database Tips Blog](https://uxcaucustips.blogspot.com/). It covers much of the same information as in the PNCMLA presentation, but in a bit more depth."
+    )
 
-    # st.write(
-    #     "In June 2026, [Carrie Price](https://carrieprice78.github.io/) re-started her excellent [Five Minute Friday](https://www.youtube.com/@carrieprice78/featured) YouTube series with a feature on the PPSG. Watch this if you'd like to see a demo with something other than the built-in placeholder terms."
-    # )
-    # st_player("https://youtu.be/32i0SO0LwPI?si=6yny1OX5SNZolMFq")
+    st.write(
+        "In June 2026, [Carrie Price](https://carrieprice78.github.io/) re-started her excellent [Five Minute Friday](https://www.youtube.com/@carrieprice78/featured) YouTube series with a feature on the PPSG. Watch this if you'd like to see a demo with something other than the built-in placeholder terms."
+    )
+    st_player("https://youtu.be/32i0SO0LwPI?si=6yny1OX5SNZolMFq")
 
 
 st.html(
